@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource( 1 )
-name = "Kingdom 1"
+name = "World 1"
 x = -34.676
 y = -50.431
