@@ -1,0 +1,122 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://KingdomSelect.gd" type="Script" id=1]
+[ext_resource path="res://kingdoms/kingdom1.tres" type="Resource" id=2]
+[ext_resource path="res://kingdoms/kingdom2.tres" type="Resource" id=3]
+[ext_resource path="res://kingdoms/kingdom3.tres" type="Resource" id=4]
+[ext_resource path="res://kingdoms/kingdom4.tres" type="Resource" id=5]
+[ext_resource path="res://kingdoms/kingdom5.tres" type="Resource" id=6]
+[ext_resource path="res://Cursor.gd" type="Script" id=7]
+[ext_resource path="res://donut.png" type="Texture" id=8]
+[ext_resource path="res://ksp_kerbin_planet_texture_by_michawlo-d904nk8.jpg" type="Texture" id=9]
+[ext_resource path="res://space_spherical_map_by_cesium135-d5qay53.jpg" type="Texture" id=10]
+[ext_resource path="res://LineRenderer/LineRenderer.tscn" type="PackedScene" id=11]
+
+[sub_resource type="SphereMesh" id=1]
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_texture = ExtResource( 9 )
+
+[sub_resource type="PanoramaSky" id=3]
+panorama = ExtResource( 10 )
+
+[sub_resource type="Environment" id=4]
+background_mode = 2
+background_sky = SubResource( 3 )
+ambient_light_energy = 5.77
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0.92549, 0.796078, 0, 1 )
+
+[node name="KingdomSelect" type="Spatial"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [  ],
+"_edit_vertical_guides_": [  ]
+}
+kingdoms = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+editor/display_folded = true
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -253.0
+margin_right = 253.0
+custom_constants/margin_bottom = 80
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer"]
+margin_right = 506.0
+margin_bottom = 520.0
+alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+margin_left = 253.0
+margin_top = 316.0
+margin_right = 253.0
+margin_bottom = 516.0
+rect_min_size = Vector2( 0, 200 )
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+show_behind_parent = true
+margin_top = 520.0
+margin_right = 506.0
+margin_bottom = 520.0
+custom_constants/margin_right = 50
+custom_constants/margin_top = -37
+custom_constants/margin_left = -20
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer"]
+show_behind_parent = true
+margin_left = -20.0
+margin_top = -37.0
+margin_right = 456.0
+margin_bottom = -1.0
+rect_min_size = Vector2( 0, 36 )
+size_flags_vertical = 0
+color = Color( 0.780392, 0.572549, 0.0745098, 1 )
+
+[node name="Cursor" type="Node2D" parent="CanvasLayer"]
+editor/display_folded = true
+script = ExtResource( 7 )
+
+[node name="Donut1" type="Sprite" parent="CanvasLayer/Cursor"]
+scale = Vector2( 0.075, 0.075 )
+texture = ExtResource( 8 )
+
+[node name="Donut2" type="Sprite" parent="CanvasLayer/Cursor"]
+scale = Vector2( 0.075, 0.075 )
+texture = ExtResource( 8 )
+
+[node name="Tween" type="Tween" parent="CanvasLayer/Cursor"]
+
+[node name="World" type="MeshInstance" parent="."]
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+
+[node name="CameraPivot" type="Spatial" parent="."]
+editor/display_folded = true
+transform = Transform( 0.922275, 0.0926205, 0.375273, 0, 0.970867, -0.239618, -0.386534, 0.220994, 0.895407, 0, 0, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Camera" type="Camera" parent="CameraPivot"]
+transform = Transform( 1, 1.3411e-007, 2.98023e-007, -1.49012e-008, 1, -3.12924e-007, 2.98023e-008, -1.49012e-008, 1, -0.835039, 0.352643, 1.9275 )
+current = true
+fov = 65.0
+near = 0.3
+
+[node name="Tween" type="Tween" parent="CameraPivot/Camera"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 4 )
+
+[node name="LineRenderer" parent="." instance=ExtResource( 11 )]
+material_override = SubResource( 5 )
+startThickness = 0.005
+endThickness = 0.005
